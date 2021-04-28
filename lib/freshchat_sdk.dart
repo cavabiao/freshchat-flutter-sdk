@@ -128,8 +128,8 @@ class Freshchat {
       bool cameraCaptureEnabled = true,
       bool gallerySelectionEnabled = true,
       bool userEventsTrackingEnabled = true,
-      String stringsBundle,
-      String themeName,
+      String? stringsBundle,
+      String? themeName,
       bool errorLogsEnabled = true}) async {
     await _channel.invokeMethod('init', <String, dynamic>{
       'appId': appId,
@@ -156,7 +156,7 @@ class Freshchat {
   }
 
   static void setUser(FreshchatUser user) async {
-    await _channel.invokeMethod('setUser', <String, String>{
+    await _channel.invokeMethod('setUser', <String, String?>{
       'firstName': user.getFirstName(),
       'lastName': user.getLastName(),
       'email': user.getEmail(),
@@ -191,11 +191,11 @@ class Freshchat {
   }
 
   static void showFAQ(
-      {String faqTitle,
-      String contactUsTitle,
-      List<String> faqTags,
-      List<String> contactUsTags,
-      FaqFilterType faqFilterType,
+      {String? faqTitle,
+      String? contactUsTitle,
+      List<String>? faqTags,
+      List<String>? contactUsTags,
+      FaqFilterType? faqFilterType,
       bool showContactUsOnFaqScreens = true,
       bool showFaqCategoriesAsGrid = true,
       bool showContactUsOnAppBar = false,
@@ -213,7 +213,7 @@ class Freshchat {
           'contactUsTitle': contactUsTitle,
           'faqTags': faqTags,
           'contactUsTags': contactUsTags,
-          'faqFilterType': faqFilterType.toShortString(),
+          'faqFilterType': faqFilterType?.toShortString() ?? FaqFilterType.Article.toString(),
           'showContactUsOnFaqScreens': showContactUsOnFaqScreens,
           'showFaqCategoriesAsGrid': showFaqCategoriesAsGrid,
           'showContactUsOnAppBar': showContactUsOnAppBar,
@@ -223,7 +223,7 @@ class Freshchat {
     }
   }
 
-  static void trackEvent(String eventName, {Map properties}) async {
+  static void trackEvent(String eventName, {Map? properties}) async {
     await _channel.invokeMethod(
       'trackEvent',
       <String, dynamic>{'eventName': eventName, 'properties': properties},
@@ -237,7 +237,7 @@ class Freshchat {
   }
 
   static void showConversations(
-      {String filteredViewTitle, List<String> tags}) async {
+      {String? filteredViewTitle, List<String>? tags}) async {
     if (filteredViewTitle == null && tags == null) {
       await _channel.invokeMethod('showConversations');
     } else {
@@ -298,7 +298,7 @@ class Freshchat {
     }
   }
 
-  static void identifyUser({String externalId, String restoreId}) {
+  static void identifyUser({String? externalId, String? restoreId}) {
     _channel.invokeMethod(
       'identifyUser',
       <String, String>{
@@ -348,8 +348,8 @@ class Freshchat {
       Importance importance = Importance.IMPORTANCE_DEFAULT,
       bool notificationSoundEnabled = true,
       bool notificationInterceptionEnabled = false,
-      String largeIcon,
-      String smallIcon}) async {
+      String? largeIcon,
+      String? smallIcon}) async {
     await _channel.invokeMethod(
       'setNotificationConfig',
       <String, dynamic>{
